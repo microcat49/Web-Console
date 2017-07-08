@@ -1,0 +1,113 @@
+<html ng-app="LockingSystem">
+  <head>
+    <title>Secure Lock</title>
+    <script src="js/aws-cognito-sdk.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.80.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+    <script src="js/ng-file-upload.min.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="login.module.js"></script>
+    <script src="secure.module.js"></script>
+    <script src="users.component.js"></script>
+    <script src="createUser.module.js"></script>
+    <script src="createuser.component.js"></script>
+
+    <script src="login.component.js"></script>
+    <script src="login.service.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
+
+
+
+  </head>
+  <body>
+    <div ng-view></div>
+  </body>
+
+  <script type="text/ng-template" id="login.html">
+    <div style="width: 50%;" ng-controller="LoginController"  class="container">
+      <form>
+        <div class="form-group">
+        <label for="formGroupExampleInput">Username: </label>
+        <input type="text" class="form-control" for="formGroupExampleInput" ng-model="user.username" placeholder="me@email.com">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Password: </label>
+        <input type="text" class="form-control" for="formGroupExampleInput" ng-model="user.password" placeholder="Your Password">
+      </div>
+        <input type="submit" value="Login"  ng-click="login()" class="btn btn-primary">
+      </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="user.html">
+  <div class="container">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Secure Lock</a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/secure">View Users <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/createUser">Create User</a>
+          <a class="nav-item nav-link" href="#">View Locks</a>
+          <a class="nav-item nav-link" href="#">Create Lock</a>
+          <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
+        </div>
+      </div>
+    </nav>
+    <div class="list-group">
+
+      <a ng-repeat="user in $ctrl.Users" href="#" class="list-group-item list-group-item-action">  {{user.Username}}</a>
+
+    </div>
+
+</div >
+
+
+</script>
+
+
+
+<script type="text/ng-template" id="create_user.html">
+  <div class="container">
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Secure Lock</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/secure">View Users <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link active" href="/createUser">Create User</a>
+        <a class="nav-item nav-link" href="#">View Locks</a>
+        <a class="nav-item nav-link" href="#">Create Lock</a>
+        <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
+      </div>
+    </div>
+  </nav>
+  <form ng-app="createUser" ng-controller="createUserController">
+    <div class="btn btn-primary" ngf-select="upload($file)" ng-model="file" name="file" ngf-pattern="'image/*'"
+        ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" 
+        ngf-resize="{width: 500, height: 500}">Select Head Shot</div>
+
+    <img ngf-thumbnail="file || '/thumb.jpg'">
+
+
+
+  </div >
+</script>
+
+
+
+
+</html>
