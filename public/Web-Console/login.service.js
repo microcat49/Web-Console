@@ -9,7 +9,7 @@ angular.module('loginService',[]).
 
 
               return {
-              login : function(authenticationData){
+              login : function(authenticationData, callback){
 
                 var poolData = {
                   UserPoolId : 'us-east-1_qt7mLyOau', // Your user pool id here
@@ -42,7 +42,19 @@ angular.module('loginService',[]).
             // example: var s3 = new AWS.S3();
 
                   console.log("login.service: login succesful");
-                    window.location.href ='#/secure'
+                    var sts = new AWS.STS();
+                    var params = {
+
+                    };
+                    sts.getCallerIdentity(params, function(err, data){
+                      if(err){
+                        callback(null, "Error");
+                      } else {
+                        callback("Succes", null);
+                      }
+                    });
+
+
                   },
 
                   onFailure: function(err) {

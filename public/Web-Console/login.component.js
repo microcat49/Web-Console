@@ -16,7 +16,13 @@ angular.module('LockingSystem').
                   };
 
 
-                  loginService.login(authenticationData);
+                  loginService.login(authenticationData, function(result, err){
+                    if(err){
+                      console.log("login.comp: login error");
+                    } else {
+                      window.location.href ='#/secure';
+                    }
+                  });
 
 
             }

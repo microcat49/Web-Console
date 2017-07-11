@@ -10,8 +10,15 @@ angular.module('LockingSystem').
           }).
           when('/', {
             template: '<login></login>'
+          }).when('/createLock', {
+            template: '<createlock></createlock>'
           }).
           when('/userDetail/:username', {
             template: '<userdetail></userdetail>'
+          }).when('/viewLocks', {
+            template: '<viewlocks></viewlocks>'
+          }).
+          when('/lockDetail/:lockname', {
+            template: '<lockdetail></lockdetail>'
           }).otherwise('/')
         }]);

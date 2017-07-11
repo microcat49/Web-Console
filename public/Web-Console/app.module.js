@@ -1,4 +1,4 @@
-angular.module('LockingSystem', ['ngRoute','loginService','createUser','userDetail']).
+angular.module('LockingSystem', ['ngRoute','loginService','createUser','userDetail','createLock','viewLocks','lockDetail']).
   run(['$rootScope','loginService','$location', function($rootScope, loginService, $location){
     $rootScope.$on('$routeChangeStart', function(event){
          loginService.isLoggedIn(function(result, err){

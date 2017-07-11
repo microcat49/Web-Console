@@ -17,13 +17,15 @@
     <script src="Web-Console/createuser.component.js"></script>
     <script src="Web-Console/userdetail.module.js"></script>
     <script src="Web-Console/userdetail.component.js"></script>
-
+    <script src="Web-Console/createLock.module.js"></script>
+    <script src="Web-Console/createLock.component.js"></script>
     <script src="Web-Console/login.component.js"></script>
     <script src="Web-Console/login.service.js"></script>
+    <script src="Web-Console/viewlocks.module.js"></script>
+    <script src="Web-Console/viewlocks.component.js"></script>
+    <script src="Web-Console/lockdetail.module.js"></script>
+    <script src="Web-Console/lockdetail.component.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 
 
@@ -32,6 +34,10 @@
   </head>
   <body>
     <div ng-view></div>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
   </body>
 
   <script type="text/ng-template" id="login.html">
@@ -61,8 +67,8 @@
         <div class="navbar-nav">
           <a class="nav-item nav-link active" href="#/secure">View Users <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link" href="#/createUser">Create User</a>
-          <a class="nav-item nav-link" href="#">View Locks</a>
-          <a class="nav-item nav-link" href="#">Create Lock</a>
+          <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+          <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
           <a class="nav-item nav-link" class="button" ng-click="logout()">Log Out</a>
         </div>
       </div>
@@ -91,8 +97,8 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="#/secure">View Users </a>
         <a class="nav-item nav-link active" href="#/createUser">Create User <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">View Locks</a>
-        <a class="nav-item nav-link" href="#">Create Lock</a>
+        <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+        <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
         <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
       </div>
     </div>
@@ -128,6 +134,70 @@
 </script>
 
 <script type="text/ng-template" id="user_detail.html">
+  <div class="container" ng-controller="userDetailController as ctrl">
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Secure Lock</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#/secure">View Users </a>
+        <a class="nav-item nav-link" href="#/createUser">Create User</a>
+        <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+        <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
+        <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
+      </div>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-sm-4"><p>Username: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.user.Username}}</p></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><p>First Name: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.userdetails[1].Value}}</p></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><p>Last Name: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.userdetails[2].Value}}</p></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><p>Email: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.userdetails[3].Value}}</p></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4"><p>User Status: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.user.UserStatus}}</p></div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="row">
+        <img src="https://s3.amazonaws.com/lockingsystem-userfiles-mobilehub-1141210121/{{ctrl.username}}"/>
+      </div>
+    </div>
+  </div>
+  <h2> Users Locks</h2>
+  <ul>
+    <li ng-repeat="lock in ctrl.userlocks">{{lock}}</li>
+  </ul>
+
+  <h2>Locks</h2>
+
+<form ng-app="userDetail" ng-controller="userDetailController">
+
+  <div class="list-group">
+    <a ng-repeat="lock in ctrl.locks" class="list-group-item list-group-item-action" ng-click="ctrl.setLocks(lock.LockName.S)">{{lock.LockName.S}}</a>
+  </div>
+
+</form>
+
+</div>
+</script>
+
+<script type="text/ng-template" id="create_lock.html">
   <div class="container">
   <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,9 +207,68 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="#/secure">View Users </a>
-        <a class="nav-item nav-link active" href="#/createUser">Create User</a>
-        <a class="nav-item nav-link" href="#">View Locks</a>
-        <a class="nav-item nav-link" href="#">Create Lock</a>
+        <a class="nav-item nav-link" href="#/createUser">Create User </a>
+        <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+        <a class="nav-item nav-link  active" href="#/createLock">Create Lock <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
+      </div>
+    </div>
+  </nav>
+  <form ng-app="createLock" ng-controller="createLockController">
+    <div class="form-group">
+      <label for="formGroupExampleInput2">Lock Name: </label>
+      <input type="text" class="form-control" for="formGroupExampleInput2" ng-model="lock.name" placeholder="First Floor">
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput3">Lock Description: </label>
+      <textarea class="form-control" rows="3" for="formGroupExampleInput3" ng-model="lock.description" placeholder="Description"></textarea>
+      </div>
+      <input type="submit" value="Submit"  ng-click="submit()" class="btn btn-primary">
+    </form>
+  </div>
+</script>
+
+<script type="text/ng-template" id="view_locks.html">
+  <div class="container">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Secure Lock</a>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="#/secure">View Users <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#/createUser">Create User</a>
+          <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+          <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
+          <a class="nav-item nav-link active" class="button" ng-click="logout()">Log Out</a>
+        </div>
+      </div>
+    </nav>
+    <div class="list-group">
+
+      <a ng-repeat="lock in $ctrl.Locks" href="#/lockDetail/{{lock.LockName.S}}" class="list-group-item list-group-item-action">  {{lock.LockName.S}}</a>
+
+    </div>
+
+</div >
+
+
+</script>
+
+<script type="text/ng-template" id="lock_detail.html">
+  <div class="container" ng-controller="lockDetailController as ctrl">
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Secure Lock</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#/secure">View Users </a>
+        <a class="nav-item nav-link" href="#/createUser">Create User</a>
+        <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+        <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
         <a class="nav-item nav-link" ng-click="logout()">Log Out</a>
       </div>
     </div>
@@ -147,34 +276,16 @@
   <div class="row">
     <div class="col-md-6">
       <div class="row">
-        <div class="col-sm-4"><p>Username: </p></div>
-        <div class="col-sm-4"><p>{{user.Username}}</p></div>
+        <div class="col-sm-4"><p>Lock Name: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.lock[0].LockName.S}}</p></div>
       </div>
       <div class="row">
-        <div class="col-sm-4"><p>First Name: </p></div>
-        <div class="col-sm-4"><p>{{userdetails[1].Value}}</p></div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4"><p>Last Name: </p></div>
-        <div class="col-sm-4"><p>{{userdetails[2].Value}}</p></div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4"><p>Email: </p></div>
-        <div class="col-sm-4"><p>{{userdetails[3].Value}}</p></div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4"><p>User Status: </p></div>
-        <div class="col-sm-4"><p>{{user.UserStatus}}</p></div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="row">
-        <img src="https://s3.amazonaws.com/lockingsystem-userfiles-mobilehub-1141210121/{{username}}"/>
+        <div class="col-sm-4"><p>Lock Description: </p></div>
+        <div class="col-sm-4"><p>{{ctrl.lock[0].Description.S}}</p></div>
       </div>
     </div>
   </div>
 </div>
 </script>
-
 
 </html>
