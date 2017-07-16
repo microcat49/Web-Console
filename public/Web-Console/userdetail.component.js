@@ -120,9 +120,8 @@ angular.module('userDetail').
                       if (err) {
                         alert(err);
                       } else {
-                        $scope.$apply(ctrl.userlocks.push({TabelName : {
-                          S : tableName
-                        }}));
+                        $scope.$apply(ctrl.userlocks.push(tableName
+                        ));
                       }
                     });
               }
@@ -130,6 +129,28 @@ angular.module('userDetail').
               ctrl.getCheck= function(lockName){
                 console.log(lockName);
                 return false;
+              }
+
+              ctrl.deleteUser = function(){
+                var payload = {
+                  UserSub : ctrl.userdetails[0].Value,
+                  Username : ctrl.user.Username
+
+                }
+                var pullParams = {
+                    FunctionName : 'DeleteUser',
+                    InvocationType : 'RequestResponse',
+                    LogType : 'None',
+                    Payload : JSON.stringify(payload)
+                    };
+
+                    lambda.invoke(pullParams, function(err, data) {
+                      if (err) {
+                        alert(err);
+                      } else {
+                        window.location.href ='#/secure';
+                      }
+                    });
               }
 
 

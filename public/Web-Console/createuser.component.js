@@ -31,7 +31,8 @@ angular.module('createUser').
                   firstname : $scope.user.firstname,
                   lastname : $scope.user.lastname,
                   email : $scope.user.email,
-                  username :$scope.user.username
+                  username :$scope.user.username,
+                  isAdmin :$scope.user.isAdmin,
                 };
 
                 var pullParams = {

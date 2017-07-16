@@ -125,6 +125,10 @@
     <label for="formGroupExampleInput4">Username: </label>
     <input type="text" class="form-control" for="formGroupExampleInput4" ng-model="user.username" placeholder="JDoe">
   </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput5">Admin: </label>
+    <input type="checkbox" class="form-control" for="formGroupExampleInput5" ng-model="user.isAdmin">
+  </div>
   <input type="submit" value="Submit"  ng-click="submit(file)" class="btn btn-primary">
 </form>
 
@@ -176,6 +180,9 @@
     <div class="col-md-2">
       <div class="row">
         <img src="https://s3.amazonaws.com/lockingsystem-userfiles-mobilehub-1141210121/{{ctrl.username}}"/>
+      </div>
+      <div class="row">
+        <input type="submit" value="Delete User"  ng-click="ctrl.deleteUser()" class="btn btn-primary">
       </div>
     </div>
   </div>
@@ -237,11 +244,11 @@
       <a class="navbar-brand" href="#">Secure Lock</a>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link" href="#/secure">View Users <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#/secure">View Users </a>
           <a class="nav-item nav-link" href="#/createUser">Create User</a>
-          <a class="nav-item nav-link" href="#/viewLocks">View Locks</a>
+          <a class="nav-item nav-link active" href="#/viewLocks">View Locks <span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link" href="#/createLock">Create Lock</a>
-          <a class="nav-item nav-link active" class="button" ng-click="logout()">Log Out</a>
+          <a class="nav-item nav-link " class="button" ng-click="logout()">Log Out</a>
         </div>
       </div>
     </nav>
