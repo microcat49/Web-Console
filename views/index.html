@@ -182,13 +182,13 @@
         <img src="https://s3.amazonaws.com/lockingsystem-userfiles-mobilehub-1141210121/{{ctrl.username}}"/>
       </div>
       <div class="row">
-        <input type="submit" value="Delete User"  ng-click="ctrl.deleteUser()" class="btn btn-primary">
+        <input type="submit" value="{{ctrl.userdetails[4].Value == 'false' ? 'Make Admin': 'Take Away admin prilages'}}"  ng-click="ctrl.makeAdmin()" class="btn btn-primary">
       </div>
     </div>
   </div>
   <h2> Users Locks</h2>
   <ul>
-    <li ng-repeat="lock in ctrl.userlocks">{{lock}}</li>
+    <li ng-repeat="lock in ctrl.userlocks">{{lock.LockName.S}}</li>
   </ul>
 
   <h2>Locks</h2>
@@ -198,8 +198,8 @@
   <div class="list-group">
     <a ng-repeat="lock in ctrl.locks" class="list-group-item list-group-item-action" ng-click="ctrl.setLocks(lock.LockName.S)">{{lock.LockName.S}}</a>
   </div>
-
 </form>
+<input type="submit" value="Delete User"  ng-click="ctrl.deleteUser()" class="btn btn-danger">
 
 </div>
 </script>
