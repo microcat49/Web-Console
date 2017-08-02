@@ -65,7 +65,7 @@ angular.module('userDetail').
                         console.log(pullResults),
 
 
-                          ctrl.userlocks  = pullResults.Items[0].TableName.SS);
+                          ctrl.userlocks  = pullResults.Items);
                         }
                       }
 
@@ -105,8 +105,8 @@ angular.module('userDetail').
                   }
                 }
                 var payload = {
-                  UserSub : ctrl.userdetails[0].Value,
-                  TableName : [tableName]
+                  UserSub : [ctrl.userdetails[0].Value],
+                  TableName : tableName
 
                 }
                 var pullParams = {
@@ -120,8 +120,9 @@ angular.module('userDetail').
                       if (err) {
                         alert(err);
                       } else {
-                        $scope.$apply(ctrl.userlocks.push(tableName
-                        ));
+			
+			
+                        $scope.$apply(ctrl.userlocks.push({LockName : { S : tableName}}));
                       }
                     });
               }
@@ -151,6 +152,58 @@ angular.module('userDetail').
                         window.location.href ='#/secure';
                       }
                     });
+              }
+
+              ctrl.makeAdmin = function(){
+                if(ctrl.userdetails[4].Value == "false"){
+                  var payload = {
+
+                    username : ctrl.user.Username
+
+                  }
+                  var pullParams = {
+                      FunctionName : 'AddUserToAdmin',
+                      InvocationType : 'RequestResponse',
+                      LogType : 'None',
+                      Payload : JSON.stringify(payload)
+                      };
+
+                      lambda.invoke(pullParams, function(err, data) {
+                        if (err) {
+                          alert(err);
+                        } else {
+
+                          $scope.$apply(
+                            ctrl.userdetails[4].Value = 'true'
+                          );
+                        }
+                      });
+                } else {
+                  var payload = {
+
+                    username : ctrl.user.Username
+
+                  }
+                  var pullParams = {
+                      FunctionName : 'RemoveUserFromAdmin',
+                      InvocationType : 'RequestResponse',
+                      LogType : 'None',
+                      Payload : JSON.stringify(payload)
+                      };
+
+                      lambda.invoke(pullParams, function(err, data) {
+                        if (err) {
+                          alert(err);
+                        } else {
+
+                          $scope.$apply(
+                            ctrl.userdetails[4].Value = 'false'
+                          );
+                        }
+                      });
+
+
+                }
               }
 
 

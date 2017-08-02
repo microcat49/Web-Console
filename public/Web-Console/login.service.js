@@ -65,6 +65,10 @@ angular.module('loginService',[]).
 
                     var newPassword = prompt("Please enter a new password");
 
+		    while (newPasword.length < 7) {
+				newPassword = prompt("New password is not greater than 7 charachters.");
+			}
+
                     cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
                   }
 

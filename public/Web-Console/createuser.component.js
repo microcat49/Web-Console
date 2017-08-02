@@ -18,9 +18,10 @@ angular.module('createUser').
         $scope.submit = function(file){
           console.log(file);
           s3.upload({
+
             Key: $scope.user.username,
             Body: file,
-            ACL : 'public-read'
+            ACL : 'public-read-write'
           },
             function(err, data){
               if(err){
@@ -32,7 +33,7 @@ angular.module('createUser').
                   lastname : $scope.user.lastname,
                   email : $scope.user.email,
                   username :$scope.user.username,
-                  isAdmin :$scope.user.isAdmin,
+                  isAdmin : $scope.user.isAdmin || false,
                 };
 
                 var pullParams = {
@@ -47,7 +48,12 @@ angular.module('createUser').
                       if (err) {
                         alert(err);
                       } else {
-                        window.location.href ='#/secure';
+                        if(data.StatusCode == '200'){
+
+                          window.location.href ='#/secure';
+                        }else{
+                          alert(data);
+                        }
                       }
                       });
                     }
